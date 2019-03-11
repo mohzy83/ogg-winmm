@@ -11,9 +11,7 @@ to emulate CD tracks, replacing the need to have a CD in the drive
 to play music in certain games. Good Old Games uses a modified version
 for several of their games. 
 
-It has gone unmaintained, so I took it upon myself to solve a couple issues,
-namely making it work on Windows 10. Good Old Games has fixed their own version,
-but it's not as useful without the source available, so I fixed it myself as well.
+This version is compatible with **Windows 10** and has been compiled against the current Windows 10 SDK.
 
 BUILDING:
 
