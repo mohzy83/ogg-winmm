@@ -25,10 +25,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="player.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="wav-winmm.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="winmm.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
