@@ -17,7 +17,7 @@
 #include <windows.h>
 #include <stdio.h>
 #include <ctype.h>
-#include <dirent.h>
+//#include <dirent.h>
 #include "player.h"
 
 #define MAGIC_DEVICEID 0xBEEF
@@ -42,10 +42,19 @@ struct play_info {
     int last;
 };
 
+//Writes a debug log file into windows temp dir
+void writeToDebugLogFile(char* text) {
+	FILE *pFile;
+	char tempPath[261];
+	GetTempPathA(261, tempPath);
+	pFile = fopen(strcat(tempPath,"\\ogg-winmm-debug.log"), "a");
+	fprintf(pFile, "%s", text);
+	fclose(pFile);
+}
 
-#define DERROR(format, ...) {char zTemp[512]; snprintf(zTemp, 512, format, ##__VA_ARGS__); OutputDebugStringA(zTemp);}
+#define DERROR(format, ...) {char zTemp[512]; snprintf(zTemp, 512, format, ##__VA_ARGS__); writeToDebugLogFile(zTemp);}
 #ifdef _DEBUG
-#define DVERBOSE(format, ...) {char zTemp[512]; snprintf(zTemp, 512, format, ##__VA_ARGS__); OutputDebugStringA(zTemp);}
+#define DVERBOSE(format, ...) {char zTemp[512]; snprintf(zTemp, 512, format, ##__VA_ARGS__); writeToDebugLogFile(zTemp);}
 #else 
 #define DVERBOSE(...)
 #endif
@@ -113,6 +122,8 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
         memset(tracks, 0, sizeof tracks);
 
         InitializeCriticalSection(&cs);
+
+		DVERBOSE("dll directory is %s\r\n", music_path);
 
         char *last = strrchr(music_path, '\\');
         if (last) *last = '\0';
@@ -466,7 +477,7 @@ MCIERROR WINAPI fake_mciSendStringA(LPCTSTR cmd, LPTSTR ret, UINT cchReturn, HAN
     DVERBOSE("MCI-SendStringA: %s\n", cmd);
 
     // Change string to lower-case
-    char *cmdbuf = strdup(cmd); // Prevents cmd readonly error
+    char *cmdbuf = _strdup(cmd); // Prevents cmd readonly error
     for (int i = 0; cmdbuf[i]; i++) {
         cmdbuf[i] = tolower(cmdbuf[i]);
     }
@@ -547,7 +558,7 @@ MCIERROR WINAPI fake_mciSendStringA(LPCTSTR cmd, LPTSTR ret, UINT cchReturn, HAN
                     if(com) { // TODO: Check if this is an INTEGER (Number)
                         parms.dwTrack = atoi(com);
                         fake_mciSendCommandA(MAGIC_DEVICEID, MCI_STATUS, MCI_STATUS_ITEM, (DWORD_PTR)&parms);
-                        itoa(parms.dwReturn, ret, 10); // Response
+                        _itoa(parms.dwReturn, ret, 10); // Response
                         return 0;
                     }   
                 }
@@ -568,7 +579,7 @@ MCIERROR WINAPI fake_mciSendStringA(LPCTSTR cmd, LPTSTR ret, UINT cchReturn, HAN
                     if(com){ // TODO: Check if this is an INTEGER (Number)
                         parms.dwTrack = atoi(com);
                         fake_mciSendCommandA(MAGIC_DEVICEID, MCI_STATUS, MCI_STATUS_ITEM|MCI_TRACK, (DWORD_PTR)&parms);
-                        itoa(parms.dwReturn, ret, 10); // Response
+                        _itoa(parms.dwReturn, ret, 10); // Response
                         return 0;
                     }   
                 }
@@ -586,7 +597,7 @@ MCIERROR WINAPI fake_mciSendStringA(LPCTSTR cmd, LPTSTR ret, UINT cchReturn, HAN
 
                     // TRACKS
                     if (com && strcmp(com, "tracks") == 0) {
-                        itoa(numTracks, ret, 10); // Response
+                        _itoa(numTracks, ret, 10); // Response
                         return 0;
                     }   
                 }
@@ -722,3 +733,4 @@ MMRESULT WINAPI fake_auxSetVolume(UINT uDeviceID, DWORD dwVolume) {
 
     return MMSYSERR_NOERROR;
 }
+

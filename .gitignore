@@ -4,3 +4,8 @@ bin/*.dll
 bin/*.exe
 err_*.log
 **.zip
+/Release
+/Debug
+/packages
+/.vs
+/winmm.vcxproj.user

@@ -135,12 +135,19 @@ int plr_pump() {
         pos += bytes;
     }
 
-    int x, end = pos / (sizeof(short)*2);
+	int x, end = pos / (sizeof(short)*2);
     short *sbuf = (short *)buf;
-    for (x = 0; x < end; x++) {
-        sbuf[x+0] = ((int32_t)sbuf[x+0] * plr_lvol)>>16;
-        sbuf[x+1] = ((int32_t)sbuf[x+1] * plr_rvol)>>16;
-    }
+	//Adjust volume
+	for (x = 0; x < end; x++) {
+		*sbuf = ((int32_t)*sbuf * plr_lvol) >> 16;
+		sbuf++;
+		*sbuf = ((int32_t)*sbuf * plr_rvol) >> 16;
+		sbuf++;
+	}
+    //for (x = 0; x < end; x++) {
+    //    sbuf[x+0] = ((int32_t)sbuf[x+0] * plr_lvol)>>16;
+    //    sbuf[x+1] = ((int32_t)sbuf[x+1] * plr_rvol)>>16;
+    //}
 
     WAVEHDR *header = malloc(sizeof(WAVEHDR));
     header->dwBufferLength   = pos;
