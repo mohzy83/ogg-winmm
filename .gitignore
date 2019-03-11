@@ -9,3 +9,4 @@ err_*.log
 /packages
 /.vs
 /winmm.vcxproj.user
+/winmm.aps
