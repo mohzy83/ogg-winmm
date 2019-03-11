@@ -13,6 +13,9 @@ for several of their games.
 
 This version is compatible with **Windows 10** and has been compiled against the current Windows 10 SDK.
 
+### Download
+You can download the current version 1.3.0 of the library here: [ogg-winmm-1.3.0.0.zip](https://github.com/mohzy83/ogg-winmm/releases/download/1.3.0.0/ogg-winmm-1.3.0.0.zip)
+
 ### Building
 
 Open the VS2017 solution "winmm.sln".
