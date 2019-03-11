@@ -13,13 +13,13 @@ for several of their games.
 
 This version is compatible with **Windows 10** and has been compiled against the current Windows 10 SDK.
 
-BUILDING:
+### Building
 
 Open the VS2017 solution "winmm.sln".
 Run Nuget Restore to download the needed dependencies (vorbis and ogg).
 Now build the winmm.dll in Release or Debug mode.
 
-USAGE:
+### Usage
 
 Copy "winmm.dll" into the same folder as the executable of the game you want 
 to emulate CD music for.
