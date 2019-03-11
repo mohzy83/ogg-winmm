@@ -1,11 +1,10 @@
 Ogg-winmm CD Audio Emulator
+---------------------------
 
-This fork is based on the rkkoszewski fork.
-https://github.com/rkkoszewski/ogg-winmm
+This fork is based on the pachuco fork.
+https://github.com/pachuco/ogg-winmm
 
-Features convenient windows build system and packaged ogg libs.
-
-
+I have converted the project to Visual Studio 2017.
 
 This project (originally by Hifi) uses .ogg music files on the disk
 to emulate CD tracks, replacing the need to have a CD in the drive
@@ -18,14 +17,9 @@ but it's not as useful without the source available, so I fixed it myself as wel
 
 BUILDING:
 
-Edit gccbase from build.bat or leave it empty if already in %PATH%.
-You may also edit executable names for GCC, AR and WINDRES if they somehow differ.
-
-By default, ogg/vorbis libs are built only once, while winmm is rebuilt everytime,
-but you can recompile libs with "build force" in console.
-
-"build debug" enables the _DEBUG define, for extra-verbose OutputDebugString.
-You may view the output of above with tool like SysInternals DebugView.
+Open the VS2017 solution "winmm.sln".
+Run Nuget Restore to download the needed dependencies (vorbis and ogg).
+Now build the winmm.dll in Release or Debug mode.
 
 USAGE:
 
